@@ -1,0 +1,5 @@
+rootProject.name='MyFootball'
+include ':app'
+include ':domain'
+include ':data'
+include ':usescases'

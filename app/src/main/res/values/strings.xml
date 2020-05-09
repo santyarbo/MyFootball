@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">MyFootball</string>
+    <string name="api_key">8695ef4873mshd7b05b62256bb67p142921jsnad04cab8aba8</string>
+
+    <!-- Main -->
+    <string name="favs">Favoritos</string>
+    <string name="settings">Ajustes</string>
+
+    <!-- Leagues -->
+    <string name="select_country">Selecciona el país</string>
+    <string name="country">País</string>
+
+
+    <!-- Team Detail -->
+    <string name="year_founded">Año de fundación:</string>
+    <string name="stadium">Estadio:</string>
+    <string name="surface">Superficie:</string>
+    <string name="stadium_address">Dirección:</string>
+    <string name="city">Ciudad:</string>
+    <string name="capacity">Capacidad:</string>
+
+    <!-- Errors -->
+    <string name="not_favorites">No has añadido ningún equipo como favorito</string>
+    <string name="error_connection_title">Error de conexión</string>
+    <string name="error_connection_message">Parece que hay un problema con la conexión. Por favor, comprueba que tienes tus datos activados o estás conectado a una red e inténtalo de nuevo</string>
+    <string name="error_not_found_title">Página no encontrada</string>
+    <string name="error_not_found_message">Parece que hay un problema con la solicitud. Por favor, inténtalo más tarde y si el problema persiste ponte en contacto con el servicio de la aplicación</string>
+    <string name="error_unknown_title">Error desconocido</string>
+    <string name="error_unknown_message">Lo sentimos. Parece que tenemos problemas con la petición. Por favor, vuelve a intentarlo más tarde. Si el problema persiste, ponte en contacto con el servicio de la aplicación</string>
+    <string name="error_no_results_title">Sin resultados</string>
+    <string name="retry_">Reintentar</string>
+</resources>

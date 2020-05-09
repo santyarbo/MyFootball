@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/leaguesFragment">
+
+    <fragment
+        android:id="@+id/leaguesFragment"
+        android:name="es.santyarbo.myfootball.ui.leagues.LeaguesFragment"
+        android:label="leagues_fragment"
+        tools:layout="@layout/leagues_fragment" >
+        <action
+            android:id="@+id/action_leaguesFragment_to_teamsFragment"
+            app:destination="@id/teamsFragment" />
+        <action
+            android:id="@+id/action_leaguesFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_leaguesFragment_to_countriesFragment"
+            app:destination="@id/countriesFragment" />
+        <argument
+            android:name="countryId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamsFragment"
+        android:name="es.santyarbo.myfootball.ui.teams.list.TeamsFragment"
+        android:label="TeamsFragment"
+        tools:layout="@layout/teams_fragment" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_teamsFragment_to_teamDetailFragment"
+            app:destination="@id/teamDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamDetailFragment"
+        android:name="es.santyarbo.myfootball.ui.teams.detail.TeamDetailFragment"
+        android:label="TeamDetailFragment"
+        tools:layout="@layout/team_detail_fragment" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="leagueId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="es.santyarbo.myfootball.ui.favs.FavoritesFragment"
+        android:label="favorites_fragment"
+        tools:layout="@layout/favorites_fragment" />
+    <fragment
+        android:id="@+id/countriesFragment"
+        android:name="es.santyarbo.myfootball.ui.countries.CountriesFragment"
+        android:label="CountriesFragment"
+        tools:layout="@layout/countries_fragment">
+        <action
+            android:id="@+id/action_countriesFragment_to_leaguesFragment"
+            app:destination="@id/leaguesFragment" />
+    </fragment>
+</navigation>
