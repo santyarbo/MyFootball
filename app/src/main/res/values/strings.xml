@@ -10,6 +10,9 @@
     <string name="select_country">Selecciona el país</string>
     <string name="country">País</string>
 
+    <!-- Teams -->
+    <string name="select_team">Selecciona el equipo</string>
+
 
     <!-- Team Detail -->
     <string name="year_founded">Año de fundación:</string>

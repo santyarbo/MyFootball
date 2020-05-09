@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="es.santyarbo.myfootball.ui.teams.list.TeamsViewModel" />
@@ -12,23 +13,48 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.teams.list.TeamsFragment">
+        tools:context=".ui.countries.TeamsFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="3"
-            app:items="@{viewmodel.teams}"
-            tools:listitem="@layout/row_league_item" />
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:title="@string/select_team"
+                app:titleTextColor="@color/colorTitleToolbar" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:items="@{viewmodel.teams}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                app:visible="@{viewmodel.teams.size() > 0}"
+                tools:listitem="@layout/row_team_item"
+                tools:visibility="gone" />
+
+
+            <es.santyarbo.myfootball.ui.common.ErrorLayout
+                android:id="@+id/error_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:onClick="@{() -> viewmodel.onRetryClicked()}"
+                app:visible="@{viewmodel.teams.size() == 0 &amp;&amp; !viewmodel.loading}"
+                tools:visibility="visible" />
+
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            app:visible="@{viewmodel.loading}"/>
-
+            app:visible="@{viewmodel.loading}" />
     </RelativeLayout>
 </layout>

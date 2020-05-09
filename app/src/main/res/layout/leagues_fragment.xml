@@ -24,6 +24,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="@color/colorTitleToolbar"
                 app:title="@{viewmodel.country.country}"
                 android:background="@color/colorPrimary"/>
 
