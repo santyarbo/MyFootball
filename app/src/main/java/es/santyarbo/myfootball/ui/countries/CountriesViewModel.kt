@@ -27,6 +27,9 @@ class CountriesViewModel(private val getCountries: GetCountries) : ViewModel(),
     private val _navigateToCountry = MutableLiveData<Event<Int>>()
     val navigateToCountry: LiveData<Event<Int>> get() = _navigateToCountry
 
+    private val _navigateOnBack = MutableLiveData<Event<Boolean>>()
+    val navigateOnBack: LiveData<Event<Boolean>> get() = _navigateOnBack
+
     init {
         initScope()
         refresh()
@@ -60,6 +63,10 @@ class CountriesViewModel(private val getCountries: GetCountries) : ViewModel(),
 
     fun onRetryClicked() {
         refresh()
+    }
+
+    fun onBackClicked() {
+        _navigateOnBack.value = Event(true)
     }
 
     override fun onCleared() {

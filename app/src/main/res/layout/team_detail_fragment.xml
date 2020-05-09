@@ -33,17 +33,22 @@
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:fitsSystemWindows="true"
-                    android:layout_gravity="start|center_vertical"
+                    android:layout_gravity="center"
                     app:layout_collapseMode="parallax"
                     app:url="@{viewmodel.logo}"
                     tools:src="@mipmap/ic_launcher"
                     android:contentDescription="@null"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginBottom="8dp"/>
 
                 <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:title="@{viewmodel.name}" />
+                    app:title="@{viewmodel.name}"
+                    app:navigationIcon="@drawable/ic_arrow_left"
+                    app:collapseIcon="@drawable/ic_arrow_left"
+                    app:layout_collapseMode="pin"
+                    app:onBackClick="@{() -> viewmodel.onBackClicked()}" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

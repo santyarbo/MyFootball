@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import es.santyarbo.myfootball.databinding.TeamsFragmentBinding
@@ -40,6 +41,12 @@ class TeamsFragment : Fragment() {
         viewModel.navigateToDetail.observe(viewLifecycleOwner, EventObserver {
             val action = TeamsFragmentDirections.actionTeamsFragmentToTeamDetailFragment(it.id, args.id)
             navController.navigate(action)
+        })
+
+        viewModel.navigateOnBack.observe(viewLifecycleOwner, EventObserver {
+            view?.let {
+                Navigation.findNavController(it).popBackStack()
+            }
         })
 
         adapter =

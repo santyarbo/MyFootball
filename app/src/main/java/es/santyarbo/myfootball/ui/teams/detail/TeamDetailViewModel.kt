@@ -1,8 +1,11 @@
 package es.santyarbo.myfootball.ui.teams.detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation
 import es.santyarbo.domain.Team
+import es.santyarbo.myfootball.ui.common.Event
 import es.santyarbo.myfootball.ui.common.ScopedViewModel
 import es.santyarbo.usescases.FindTeamById
 import es.santyarbo.usescases.ToggleTeamFavorite
@@ -44,12 +47,15 @@ class TeamDetailViewModel(
     private val _favorite = MutableLiveData<Boolean>()
     val favorite: LiveData<Boolean> get() = _favorite
 
+    private val _navigateOnBack = MutableLiveData<Event<Boolean>>()
+    val navigateOnBack: LiveData<Event<Boolean>> get() = _navigateOnBack
+
     init {
+        initScope()
         launch {
             _team.value = findTeamById.invoke(teamId)
             updateUi()
         }
-
     }
 
     private fun updateUi() {
@@ -74,6 +80,15 @@ class TeamDetailViewModel(
                 updateUi()
             }
         }
+    }
+
+    fun onBackClicked() {
+        _navigateOnBack.value = Event(true)
+    }
+
+    override fun onCleared() {
+        destroyScope()
+        super.onCleared()
     }
 
 }

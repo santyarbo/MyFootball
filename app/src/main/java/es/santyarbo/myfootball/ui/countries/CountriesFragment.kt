@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import es.santyarbo.myfootball.databinding.CountriesFragmentBinding
 import es.santyarbo.myfootball.ui.common.EventObserver
@@ -40,6 +41,12 @@ class CountriesFragment : Fragment() {
         viewModel.navigateToCountry.observe(viewLifecycleOwner, EventObserver { id ->
             val action = CountriesFragmentDirections.actionCountriesFragmentToLeaguesFragment(id)
             navController.navigate(action)
+        })
+
+        viewModel.navigateOnBack.observe(viewLifecycleOwner, EventObserver {
+            view?.let {
+                Navigation.findNavController(it).popBackStack()
+            }
         })
 
         adapter = CountriesAdapter(viewModel::onCountryClicked)

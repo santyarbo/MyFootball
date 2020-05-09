@@ -2,6 +2,7 @@ package es.santyarbo.myfootball.ui
 
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import es.santyarbo.myfootball.ui.common.ErrorLayout
 import es.santyarbo.myfootball.ui.common.loadSvgUrl
@@ -28,4 +29,9 @@ fun View.setVisible(visible: Boolean?) {
 @BindingAdapter("onClick")
 fun ErrorLayout.setOnActionClick(onClickListener: View.OnClickListener?) {
     btn_retry.setOnClickListener(onClickListener)
+}
+
+@BindingAdapter("onBackClick")
+fun Toolbar.setNavigationOnClickListener(onClickListener: View.OnClickListener?) {
+    setNavigationOnClickListener(onClickListener)
 }

@@ -26,6 +26,9 @@ class TeamsViewModel (
     private val _navigateToDetail = MutableLiveData<Event<Team>>()
     val navigateToDetail: LiveData<Event<Team>> get() = _navigateToDetail
 
+    private val _navigateOnBack = MutableLiveData<Event<Boolean>>()
+    val navigateOnBack: LiveData<Event<Boolean>> get() = _navigateOnBack
+
     init {
         initScope()
         refresh()
@@ -58,6 +61,10 @@ class TeamsViewModel (
 
     fun onRetryClicked() {
         refresh()
+    }
+
+    fun onBackClicked() {
+        _navigateOnBack.value = Event(true)
     }
 
     override fun onCleared() {

@@ -25,7 +25,9 @@
                 android:layout_height="?attr/actionBarSize"
                 app:titleTextColor="@color/colorTitleToolbar"
                 android:background="@color/colorPrimary"
-                app:title="@string/select_country"/>
+                app:title="@string/select_country"
+                app:navigationIcon="@drawable/ic_arrow_left"
+                app:onBackClick="@{() -> viewmodel.onBackClicked()}"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
