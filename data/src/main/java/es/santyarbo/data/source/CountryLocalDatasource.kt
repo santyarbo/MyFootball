@@ -8,4 +8,5 @@ interface CountryLocalDatasource {
     suspend fun getCountries() : List<Country>
     suspend fun findById(id: Int) : Country
     suspend fun update(country: Country)
+    suspend fun findByCode(code: String) : Country
 }

@@ -31,4 +31,8 @@ class CountryRoomDataSource(db: FootballDatabase) : CountryLocalDatasource {
 
     override suspend fun update(country: Country) =
         withContext(Dispatchers.IO) { countryDao.updateCountry(country.toRoomCountry()) }
+
+    override suspend fun findByCode(code: String): Country =
+        withContext(Dispatchers.IO) { countryDao.findByCode(code).toDomainCountry() }
+
 }
