@@ -54,6 +54,7 @@ class CountriesFragment : Fragment() {
             recycler.adapter = adapter
             viewmodel = viewModel
             lifecycleOwner = this@CountriesFragment
+            viewModel.getCountries()
         }
 
     }

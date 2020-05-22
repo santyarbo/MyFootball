@@ -8,11 +8,13 @@ import es.santyarbo.myfootball.ui.common.ErrorLayout
 import es.santyarbo.myfootball.ui.common.Event
 import es.santyarbo.myfootball.ui.common.ScopedViewModel
 import es.santyarbo.usescases.GetTeamsByLeague
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class TeamsViewModel (
     private val leagueId: Int,
-    private val getTeamsByLeague: GetTeamsByLeague) : ScopedViewModel() {
+    private val getTeamsByLeague: GetTeamsByLeague,
+    override var uiDispatcher: CoroutineDispatcher) : ScopedViewModel(uiDispatcher) {
 
     private val _teams = MutableLiveData<List<Team>>()
     val teams: LiveData<List<Team>> get() = _teams
@@ -29,12 +31,7 @@ class TeamsViewModel (
     private val _navigateOnBack = MutableLiveData<Event<Boolean>>()
     val navigateOnBack: LiveData<Event<Boolean>> get() = _navigateOnBack
 
-    init {
-        initScope()
-        refresh()
-    }
-
-    private fun refresh() {
+    fun getTeams() {
         launch {
             _loading.value = true
             when(val result = getTeamsByLeague.invoke(leagueId)) {
@@ -60,16 +57,11 @@ class TeamsViewModel (
     }
 
     fun onRetryClicked() {
-        refresh()
+        getTeams()
     }
 
     fun onBackClicked() {
         _navigateOnBack.value = Event(true)
-    }
-
-    override fun onCleared() {
-        destroyScope()
-        super.onCleared()
     }
 
 }

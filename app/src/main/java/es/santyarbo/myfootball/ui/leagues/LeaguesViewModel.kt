@@ -9,15 +9,18 @@ import es.santyarbo.domain.ResultWrapper
 import es.santyarbo.myfootball.ui.common.ErrorLayout
 import es.santyarbo.myfootball.ui.common.Event
 import es.santyarbo.myfootball.ui.common.Scope
+import es.santyarbo.myfootball.ui.common.ScopedViewModel
 import es.santyarbo.usescases.GetCountry
 import es.santyarbo.usescases.GetLeagues
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class LeaguesViewModel(
     private val countryId: Int,
     private val getCountry: GetCountry,
-    private val getLeagues: GetLeagues
-) : ViewModel(), Scope by Scope.Impl() {
+    private val getLeagues: GetLeagues,
+    override var uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _leagues = MutableLiveData<List<League>>()
     val leagues: LiveData<List<League>> get() = _leagues
@@ -37,15 +40,14 @@ class LeaguesViewModel(
     private val _requestLocationPermission = MutableLiveData<Event<Unit>>()
     val requestLocationPermission: LiveData<Event<Unit>> get() = _requestLocationPermission
 
-    init {
-        initScope()
+    /*init {
         refresh()
     }
 
     private fun refresh() {
         _loading.value = true
         _requestLocationPermission.value = Event(Unit)
-    }
+    }*/
 
     fun onCoarsePermissionRequested() {
         launch {
@@ -76,11 +78,6 @@ class LeaguesViewModel(
     }
 
     fun onRetryClicked() {
-        refresh()
-    }
-
-    override fun onCleared() {
-        destroyScope()
-        super.onCleared()
+        onCoarsePermissionRequested()
     }
 }

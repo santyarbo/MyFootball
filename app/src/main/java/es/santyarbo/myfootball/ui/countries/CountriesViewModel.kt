@@ -9,11 +9,15 @@ import es.santyarbo.myfootball.R
 import es.santyarbo.myfootball.ui.common.ErrorLayout
 import es.santyarbo.myfootball.ui.common.Event
 import es.santyarbo.myfootball.ui.common.Scope
+import es.santyarbo.myfootball.ui.common.ScopedViewModel
 import es.santyarbo.usescases.GetCountries
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class CountriesViewModel(private val getCountries: GetCountries) : ViewModel(),
-    Scope by Scope.Impl() {
+class CountriesViewModel(
+    private val getCountries: GetCountries,
+    override var uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher){
 
     private val _countries = MutableLiveData<List<Country>>()
     val countries: LiveData<List<Country>> get() = _countries
@@ -30,12 +34,7 @@ class CountriesViewModel(private val getCountries: GetCountries) : ViewModel(),
     private val _navigateOnBack = MutableLiveData<Event<Boolean>>()
     val navigateOnBack: LiveData<Event<Boolean>> get() = _navigateOnBack
 
-    init {
-        initScope()
-        refresh()
-    }
-
-    private fun refresh() {
+    fun getCountries() {
         launch {
             _loading.value = true
 
@@ -62,15 +61,10 @@ class CountriesViewModel(private val getCountries: GetCountries) : ViewModel(),
     }
 
     fun onRetryClicked() {
-        refresh()
+        getCountries()
     }
 
     fun onBackClicked() {
         _navigateOnBack.value = Event(true)
-    }
-
-    override fun onCleared() {
-        destroyScope()
-        super.onCleared()
     }
 }

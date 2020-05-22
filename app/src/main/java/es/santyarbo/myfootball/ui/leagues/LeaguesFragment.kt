@@ -73,6 +73,7 @@ class LeaguesFragment : Fragment() {
                 }
                 return@setOnMenuItemClickListener true
             }
+            viewModel.onCoarsePermissionRequested()
         }
     }
 }
