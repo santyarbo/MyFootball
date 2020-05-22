@@ -1,21 +1,21 @@
 package es.santyarbo.myfootball.ui.teams.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.Navigation
 import es.santyarbo.domain.Team
 import es.santyarbo.myfootball.ui.common.Event
 import es.santyarbo.myfootball.ui.common.ScopedViewModel
 import es.santyarbo.usescases.FindTeamById
 import es.santyarbo.usescases.ToggleTeamFavorite
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class TeamDetailViewModel(
     private val teamId: Int,
     private val findTeamById: FindTeamById,
-    private val toggleTeamFavorite: ToggleTeamFavorite
-) : ScopedViewModel() {
+    private val toggleTeamFavorite: ToggleTeamFavorite,
+    override var uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _team = MutableLiveData<Team>()
     val team: LiveData<Team> get() = _team
@@ -50,8 +50,8 @@ class TeamDetailViewModel(
     private val _navigateOnBack = MutableLiveData<Event<Boolean>>()
     val navigateOnBack: LiveData<Event<Boolean>> get() = _navigateOnBack
 
-    init {
-        initScope()
+
+    fun getTeam() {
         launch {
             _team.value = findTeamById.invoke(teamId)
             updateUi()
@@ -70,7 +70,6 @@ class TeamDetailViewModel(
             _city.value = venueCity
             _favorite.value = favorite
         }
-
     }
 
     fun onFavoriteClicked() {

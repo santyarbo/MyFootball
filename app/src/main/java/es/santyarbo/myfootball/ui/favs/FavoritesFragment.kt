@@ -41,6 +41,7 @@ class FavoritesFragment : Fragment() {
             recycler.adapter = adapter
             viewmodel = viewModel
             lifecycleOwner = this@FavoritesFragment
+            viewModel.getTeamsFavorites()
         }
     }
 }

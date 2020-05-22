@@ -55,6 +55,7 @@ class TeamsFragment : Fragment() {
             recycler.adapter = adapter
             viewmodel = viewModel
             lifecycleOwner = this@TeamsFragment
+            viewModel.getTeams()
         }
     }
 }

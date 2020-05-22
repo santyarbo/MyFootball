@@ -1,20 +1,19 @@
 package es.santyarbo.myfootball.ui.common
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 interface Scope : CoroutineScope {
 
-    class Impl : Scope {
+    class Impl(override var uiDispatcher: CoroutineDispatcher) : Scope {
         override lateinit var job: Job
     }
 
     var job: Job
+    var uiDispatcher: CoroutineDispatcher
+
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+        get() = uiDispatcher + job
 
     fun initScope() {
         job = SupervisorJob()

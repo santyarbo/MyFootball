@@ -22,7 +22,7 @@ class CountryRepositoryTest {
     lateinit var countryRemoteDatasource: CountryRemoteDatasource
 
     @Mock
-    lateinit var countryLocalDatasource: CountryLocalDatasource
+    lateinit var countryLocalDataSource: CountryLocalDatasource
 
     @Mock
     lateinit var regionRepository: RegionRepository
@@ -32,15 +32,15 @@ class CountryRepositoryTest {
     @Before
     fun setUp() {
         countryRepository =
-            CountryRepository(countryRemoteDatasource, countryLocalDatasource, regionRepository)
+            CountryRepository(countryRemoteDatasource, countryLocalDataSource, regionRepository)
     }
 
     @Test
     fun `getCountries from local data source first`() {
         runBlocking {
             val localCountries = ResultWrapper.Success(listOf(mockedCountry.copy(id = 1)))
-            whenever(countryLocalDatasource.isEmpty()).thenReturn(false)
-            whenever(countryLocalDatasource.getCountries()).thenReturn(localCountries.value)
+            whenever(countryLocalDataSource.isEmpty()).thenReturn(false)
+            whenever(countryLocalDataSource.getCountries()).thenReturn(localCountries.value)
 
             val result = countryRepository.getCountries()
 
@@ -52,12 +52,12 @@ class CountryRepositoryTest {
     fun `getCountries saves remote data to local`() {
         runBlocking {
             val remoteCountries = ResultWrapper.Success(listOf(mockedCountry.copy(2)))
-            whenever(countryLocalDatasource.isEmpty()).thenReturn(true)
+            whenever(countryLocalDataSource.isEmpty()).thenReturn(true)
             whenever(countryRemoteDatasource.getCountries()).thenReturn(remoteCountries)
 
             countryRepository.getCountries()
 
-            verify(countryLocalDatasource).saveCountries(remoteCountries.value)
+            verify(countryLocalDataSource).saveCountries(remoteCountries.value)
         }
     }
 
@@ -65,7 +65,7 @@ class CountryRepositoryTest {
     fun `getCountries network error`() {
         runBlocking {
             val networkError = ResultWrapper.NetworkError
-            whenever(countryLocalDatasource.isEmpty()).thenReturn(true)
+            whenever(countryLocalDataSource.isEmpty()).thenReturn(true)
             whenever(countryRemoteDatasource.getCountries()).thenReturn(networkError)
 
             val result = countryRepository.getCountries()
@@ -78,7 +78,7 @@ class CountryRepositoryTest {
     fun `getCountries generic error`() {
         runBlocking {
             val genericError = ResultWrapper.GenericError()
-            whenever(countryLocalDatasource.isEmpty()).thenReturn(true)
+            whenever(countryLocalDataSource.isEmpty()).thenReturn(true)
             whenever(countryRemoteDatasource.getCountries()).thenReturn(genericError)
 
             val result = countryRepository.getCountries()
@@ -91,7 +91,7 @@ class CountryRepositoryTest {
     fun `getCountry findById calls local data source`() {
         runBlocking {
             val country = mockedCountry.copy(id = 5)
-            whenever(countryLocalDatasource.findById(5)).thenReturn(country)
+            whenever(countryLocalDataSource.findById(5)).thenReturn(country)
 
             val result = countryRepository.getCountry(5)
 
@@ -103,9 +103,9 @@ class CountryRepositoryTest {
     fun `getCountry without id by region calls local data source`() {
         runBlocking {
             val country = mockedCountry.copy(code = "es")
-            whenever(countryLocalDatasource.isEmpty()).thenReturn(false)
+            whenever(countryLocalDataSource.isEmpty()).thenReturn(false)
             whenever(regionRepository.findLastRegion()).thenReturn("es")
-            whenever(countryLocalDatasource.findByCode("es")).thenReturn(country)
+            whenever(countryLocalDataSource.findByCode("es")).thenReturn(country)
 
             val result = countryRepository.getCountry(-1)
 
@@ -117,7 +117,7 @@ class CountryRepositoryTest {
     fun `getCountry without id by default calls local data source`() {
         runBlocking {
             val country = mockedCountry.copy(id = -1)
-            whenever(countryLocalDatasource.isEmpty()).thenReturn(true)
+            whenever(countryLocalDataSource.isEmpty()).thenReturn(true)
 
             val result = countryRepository.getCountry(-1)
 

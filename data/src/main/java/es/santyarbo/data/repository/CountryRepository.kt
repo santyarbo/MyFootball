@@ -7,33 +7,33 @@ import es.santyarbo.domain.ResultWrapper
 
 class CountryRepository(
     private val countryRemoteDatasource: CountryRemoteDatasource,
-    private val countryLocalDatasource: CountryLocalDatasource,
+    private val countryLocalDataSource: CountryLocalDatasource,
     private val regionRepository: RegionRepository
 ) {
     suspend fun getCountries() : ResultWrapper<List<Country>> {
-        if (countryLocalDatasource.isEmpty()) {
+        if (countryLocalDataSource.isEmpty()) {
             when(val response = countryRemoteDatasource.getCountries()) {
                 is ResultWrapper.NetworkError -> return response
                 is ResultWrapper.GenericError -> return response
                 is ResultWrapper.Success -> {
-                    countryLocalDatasource.saveCountries(response.value)
+                    countryLocalDataSource.saveCountries(response.value)
                 }
             }
         }
-        return ResultWrapper.Success(countryLocalDatasource.getCountries())
+        return ResultWrapper.Success(countryLocalDataSource.getCountries())
     }
 
 
    suspend fun getCountry(countryId: Int) : Country {
        return if (countryId == -1) {
-           if (countryLocalDatasource.isEmpty()) {
+           if (countryLocalDataSource.isEmpty()) {
                Country(-1, "España", "es", null)
            } else {
                val region = regionRepository.findLastRegion()
-               countryLocalDatasource.findByCode(region)
+               countryLocalDataSource.findByCode(region)
            }
        } else {
-           countryLocalDatasource.findById(countryId);
+           countryLocalDataSource.findById(countryId);
        }
 
    }

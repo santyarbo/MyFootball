@@ -22,6 +22,8 @@ import es.santyarbo.myfootball.ui.teams.detail.TeamDetailViewModel
 import es.santyarbo.myfootball.ui.teams.list.TeamsFragment
 import es.santyarbo.myfootball.ui.teams.list.TeamsViewModel
 import es.santyarbo.usescases.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -46,9 +48,10 @@ private val appModule = module {
     factory<TeamLocalDatasource> { TeamRoomDataSource(get()) }
     factory<TeamRemoteDatasource> { TeamApiDataSource() }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
+    single<CoroutineDispatcher> { Dispatchers.Main }
 }
 
-private val dataModule = module {
+val dataModule = module {
     factory { CountryRepository(get(), get(), get()) }
     factory { LeaguesRepository(get()) }
     factory { RegionRepository(get(), get()) }
@@ -57,28 +60,28 @@ private val dataModule = module {
 
 private val scopesModule = module {
     scope(named<CountriesFragment>()) {
-        viewModel { CountriesViewModel(get()) }
+        viewModel { CountriesViewModel(get(), get()) }
         scoped { GetCountries(get()) }
     }
 
     scope(named<FavoritesFragment>()) {
-        viewModel { FavoritesViewModel(get()) }
+        viewModel { FavoritesViewModel(get(), get()) }
         scoped { GetTeamsFavorites(get()) }
     }
 
     scope(named<LeaguesFragment>()) {
-        viewModel { (id: Int) -> LeaguesViewModel(id, get(), get()) }
+        viewModel { (id: Int) -> LeaguesViewModel(id, get(), get(), get()) }
         scoped { GetCountry(get()) }
         scoped { GetLeagues(get()) }
     }
 
     scope(named<TeamsFragment>()) {
-        viewModel { (id: Int) -> TeamsViewModel(id, get()) }
+        viewModel { (id: Int) -> TeamsViewModel(id, get(), get()) }
         scoped { GetTeamsByLeague(get()) }
     }
 
     scope(named<TeamDetailFragment>()) {
-        viewModel { (id: Int) -> TeamDetailViewModel(id, get(), get()) }
+        viewModel { (id: Int) -> TeamDetailViewModel(id, get(), get(), get()) }
         scoped { FindTeamById(get()) }
         scoped { ToggleTeamFavorite(get()) }
     }
