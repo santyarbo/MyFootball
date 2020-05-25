@@ -43,7 +43,7 @@ class TeamDetailFragment : Fragment() {
         with(binding) {
             viewmodel = viewModel
             lifecycleOwner = this@TeamDetailFragment
-            viewModel.getTeam()
+            viewModel.findTeam()
         }
     }
 }

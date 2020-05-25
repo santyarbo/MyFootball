@@ -51,12 +51,11 @@ class TeamDetailViewModel(
     val navigateOnBack: LiveData<Event<Boolean>> get() = _navigateOnBack
 
 
-    fun getTeam() {
-        launch {
-            _team.value = findTeamById.invoke(teamId)
-            updateUi()
-        }
+    fun findTeam() = launch {
+        _team.value = findTeamById.invoke(teamId)
+        updateUi()
     }
+
 
     private fun updateUi() {
         team.value?.run {
@@ -72,22 +71,17 @@ class TeamDetailViewModel(
         }
     }
 
-    fun onFavoriteClicked() {
-        launch {
-            team.value?.let {
-                _team.value = toggleTeamFavorite.invoke(it)
-                updateUi()
-            }
+    fun onFavoriteClicked() = launch {
+        team.value?.let {
+            _team.value = toggleTeamFavorite.invoke(it)
+            updateUi()
         }
     }
+
 
     fun onBackClicked() {
         _navigateOnBack.value = Event(true)
     }
 
-    override fun onCleared() {
-        destroyScope()
-        super.onCleared()
-    }
 
 }

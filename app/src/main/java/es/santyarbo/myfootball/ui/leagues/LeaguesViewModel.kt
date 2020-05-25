@@ -40,15 +40,6 @@ class LeaguesViewModel(
     private val _requestLocationPermission = MutableLiveData<Event<Unit>>()
     val requestLocationPermission: LiveData<Event<Unit>> get() = _requestLocationPermission
 
-    /*init {
-        refresh()
-    }
-
-    private fun refresh() {
-        _loading.value = true
-        _requestLocationPermission.value = Event(Unit)
-    }*/
-
     fun onCoarsePermissionRequested() {
         launch {
             _loading.value = true

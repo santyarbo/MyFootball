@@ -55,7 +55,7 @@ class TeamDetailIntegrationTest :AutoCloseKoinTest() {
     fun `observing LiveData finds the team`() {
         vm.team.observeForever(observerTeam)
 
-        vm.getTeam()
+        vm.findTeam()
 
         verify(observerTeam).onChanged(mockedTeam.copy(1))
     }
@@ -64,7 +64,7 @@ class TeamDetailIntegrationTest :AutoCloseKoinTest() {
     fun `favorite is updated in local data source`() {
         vm.team.observeForever(observerTeam)
 
-        vm.getTeam()
+        vm.findTeam()
         vm.onFavoriteClicked()
 
         runBlocking {
