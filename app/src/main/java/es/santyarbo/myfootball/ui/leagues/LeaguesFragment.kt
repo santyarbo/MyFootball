@@ -31,7 +31,7 @@ class LeaguesFragment : Fragment() {
         )
     }
 
-    private val viewModel: LeaguesViewModel by lifecycleScope.viewModel(this) {
+    val viewModel: LeaguesViewModel by lifecycleScope.viewModel(this) {
         parametersOf(args.countryId)
     }
 

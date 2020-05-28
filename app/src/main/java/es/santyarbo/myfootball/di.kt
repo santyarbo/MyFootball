@@ -8,6 +8,7 @@ import es.santyarbo.myfootball.data.PlayServicesLocationDataSource
 import es.santyarbo.myfootball.data.database.FootballDatabase
 import es.santyarbo.myfootball.data.database.countries.CountryRoomDataSource
 import es.santyarbo.myfootball.data.database.teams.TeamRoomDataSource
+import es.santyarbo.myfootball.data.server.common.FootballApi
 import es.santyarbo.myfootball.data.server.countries.CountryApiDataSource
 import es.santyarbo.myfootball.data.server.leagues.TheLeagueDbDataSource
 import es.santyarbo.myfootball.data.server.teams.TeamApiDataSource
@@ -49,6 +50,7 @@ private val appModule = module {
     factory<TeamRemoteDatasource> { TeamApiDataSource() }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
+    single { FootballApi }
 }
 
 val dataModule = module {

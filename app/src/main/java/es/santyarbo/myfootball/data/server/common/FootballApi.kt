@@ -14,7 +14,7 @@ object FootballApi {
     private val apiKey = "8695ef4873mshd7b05b62256bb67p142921jsnad04cab8aba8"
     private val apiHost = "api-football-v1.p.rapidapi.com"
 
-    private val okHttpClient = HttpLoggingInterceptor().run {
+    val okHttpClient = HttpLoggingInterceptor().run {
         level = HttpLoggingInterceptor.Level.BODY
 
         OkHttpClient.Builder().addInterceptor(
