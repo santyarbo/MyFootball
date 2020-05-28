@@ -33,7 +33,7 @@ class FavoritesFragment : Fragment() {
         navController = view.findNavController()
 
         viewModel.navigateToDetail.observe(viewLifecycleOwner, EventObserver{
-            //TODO
+            navController.navigate(FavoritesFragmentDirections.actionFavoritesFragmentToTeamDetailFragment(it.id, -1))
         })
 
         adapter = TeamsAdapter(viewModel::onTeamClicked)

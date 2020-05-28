@@ -55,7 +55,11 @@
         android:id="@+id/favoritesFragment"
         android:name="es.santyarbo.myfootball.ui.favs.FavoritesFragment"
         android:label="favorites_fragment"
-        tools:layout="@layout/favorites_fragment" />
+        tools:layout="@layout/favorites_fragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_teamDetailFragment"
+            app:destination="@id/teamDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/countriesFragment"
         android:name="es.santyarbo.myfootball.ui.countries.CountriesFragment"
