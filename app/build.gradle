@@ -42,6 +42,12 @@ android {
         enabled = true
     }
 
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
+        }
+    }
+
 }
 
 androidExtensions {

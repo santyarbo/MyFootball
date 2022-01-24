@@ -2,6 +2,7 @@ package es.santyarbo.myfootball.data.server.common
 
 import com.google.gson.Gson
 import es.santyarbo.domain.ErrorResponse
+import es.santyarbo.myfootball.data.server.ApiKeyRetriever
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -11,8 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object FootballApi {
-    private val apiKey = "8695ef4873mshd7b05b62256bb67p142921jsnad04cab8aba8"
-    private val apiHost = "api-football-v1.p.rapidapi.com"
+    private val apiKey = ApiKeyRetriever.getFooApiKey()//"8695ef4873mshd7b05b62256bb67p142921jsnad04cab8aba8"
+    private const val apiHost = "api-football-v1.p.rapidapi.com"
 
     val okHttpClient = HttpLoggingInterceptor().run {
         level = HttpLoggingInterceptor.Level.BODY
@@ -37,7 +38,7 @@ object FootballApi {
 }
 
 
-class FootballRequestInterceptor(val apiKey: String, val apiHost: String) : Interceptor {
+class FootballRequestInterceptor(private val apiKey: String, private val apiHost: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
